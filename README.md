@@ -5,6 +5,7 @@ Este es un ejercicio que estoy realizando para usar lo aprendido en la implement
 En este ejercicio encontrara las practicas:
 - Manejo de DTO, para las transferencias de datos.
 - CamelCase, para el nombramiento de variables, metodos, etc.
+- Comentarios entendibles, estos explican el funcionamiento de los metodos y parte poco usuales
 
 este proyectos cuenta con las dependecias:
 
