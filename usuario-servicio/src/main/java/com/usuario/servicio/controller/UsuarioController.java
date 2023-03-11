@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +23,16 @@ public class UsuarioController {
 	
 	@Autowired
 	private UsuarioService usuarioService;
+	
+	
+	/*
+	 * Lista de lo que se va a encontrar en este controlador
+	 * 
+	 * 1.- getUsers => Obtener el listadod e todos los usuarios
+	 * 2.- getUserById => Obtener los datos de un usuario mediante su Id
+	 * 3.- saveUser => Crear un Usuario nuevo 
+	 * 
+	 * */
 	
 	@GetMapping
 	public ResponseEntity<?> getUsers(){
@@ -58,9 +70,26 @@ public class UsuarioController {
 			
 			Map<String, String> respuesta = new HashMap<>();
 			respuesta.put("error", "Hubo un error al intentar obtner el usuario: " + e);
-			return new ResponseEntity<>(respuesta, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}	
 		
 	}
+	
+	@PostMapping
+	public ResponseEntity<?> saveUser(@RequestBody UsuarioDTO usuarioDTO){
+		try {
+			
+			UsuarioDTO usuarioDTOSave = usuarioService.saveUser(usuarioDTO);
+			return new ResponseEntity<>(usuarioDTOSave, HttpStatus.CREATED);
+			
+		} catch (Exception e) {
+			
+			Map<String, String> respuesta = new HashMap<>();
+			respuesta.put("error", "Hubo un error al intentar crear el usuario: " + e);
+			return new ResponseEntity<>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
+	}
+	
 }

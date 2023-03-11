@@ -13,6 +13,23 @@ import com.usuario.servicio.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {
+	
+	/*
+	 * 
+	 * Indice:
+	 * 
+	 * Conversores
+	 * 
+	 * converToUsuarioDTO => transforma de datos de usuario a usuarioDTO
+	 * convertToUsuario => transforma de datos de usuarioDTO a usuario
+	 * 
+	 * Servicios
+	 * 
+	 * getAllUsers -> obtener todos los usuarios de la base de datos
+	 * getUserById -> obtener un usuarios en especifico mediante el Id
+	 * saveUser    ->    crear un usuario nuevo
+	 * 
+	 * */
 
 	@Autowired 
 	private UsuarioRepository usuarioRepository;
@@ -27,6 +44,7 @@ public class UsuarioService {
 		
 		//Instanciamos y asignamos los datos a UsuarioDTO
 		UsuarioDTO usuarioDTO = new UsuarioDTO();
+		usuarioDTO.setId(usuario.getId());
 		usuarioDTO.setNombre(usuario.getNombre());
 		usuarioDTO.setEmail(usuario.getEmail());
 		
@@ -38,6 +56,7 @@ public class UsuarioService {
 		
 		//Instancemos y asignamos los datos a Usuario
 		Usuario usuario = new Usuario();
+		usuario.setId(usuarioDTO.getId());
 		usuario.setNombre(usuarioDTO.getNombre());
 		usuario.setEmail(usuarioDTO.getEmail());
 		
@@ -45,15 +64,13 @@ public class UsuarioService {
 		return usuario;
 	}
 	
+	
 	/*
 	 * 
-	 * Abajo se encuentran los siguientes servicios
-	 * 
-	 * getAllUsers -> obtener todos los usuarios de la base de datos
-	 * getUserById -> obtener un usuarios en especifico mediante el Id
-	 * saveUser    ->    crear un usuario nuevo
+	 * Creamos los Servicios
 	 * 
 	 * */
+	
 	
 
 	/*
