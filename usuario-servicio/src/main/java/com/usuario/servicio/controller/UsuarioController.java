@@ -15,30 +15,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.usuario.servicio.dto.UsuarioDTO;
-import com.usuario.servicio.servicio.UsuarioService;
+import com.usuario.servicio.servicio.UsuarioServicio;
 
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
 	
 	@Autowired
-	private UsuarioService usuarioService;
+	private UsuarioServicio usuarioServicio;
 	
 	
 	/*
-	 * Lista de lo que se va a encontrar en este controlador
+	 * Indice de UsuarioController
 	 * 
-	 * 1.- getUsers => Obtener el listadod e todos los usuarios
+	 * 1.- getAllUsers => Obtener listado de todos los usuarios
 	 * 2.- getUserById => Obtener los datos de un usuario mediante su Id
 	 * 3.- saveUser => Crear un Usuario nuevo 
 	 * 
 	 * */
 	
 	@GetMapping
-	public ResponseEntity<?> getUsers(){
+	public ResponseEntity<?> getAllUsers(){
 		try {
 			
-			List<UsuarioDTO> usuariosDTO = usuarioService.getAllUsers();
+			List<UsuarioDTO> usuariosDTO = usuarioServicio.getAllUsers();
 			return new ResponseEntity<>(usuariosDTO, HttpStatus.OK);
 			
 		} catch (Exception e) {
@@ -55,7 +55,7 @@ public class UsuarioController {
 		
 		try {
 			
-			UsuarioDTO usuarioDTO = usuarioService.getUserById(id);
+			UsuarioDTO usuarioDTO = usuarioServicio.getUserById(id);
 			
 			if(usuarioDTO == null) {
 				
@@ -69,7 +69,7 @@ public class UsuarioController {
 		} catch (Exception e) {
 			
 			Map<String, String> respuesta = new HashMap<>();
-			respuesta.put("error", "Hubo un error al intentar obtner el usuario: " + e);
+			respuesta.put("error", "Hubo un error al intentar obtener el usuario: " + e);
 			return new ResponseEntity<>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}	
@@ -80,7 +80,7 @@ public class UsuarioController {
 	public ResponseEntity<?> saveUser(@RequestBody UsuarioDTO usuarioDTO){
 		try {
 			
-			UsuarioDTO usuarioDTOSave = usuarioService.saveUser(usuarioDTO);
+			UsuarioDTO usuarioDTOSave = usuarioServicio.saveUser(usuarioDTO);
 			return new ResponseEntity<>(usuarioDTOSave, HttpStatus.CREATED);
 			
 		} catch (Exception e) {
