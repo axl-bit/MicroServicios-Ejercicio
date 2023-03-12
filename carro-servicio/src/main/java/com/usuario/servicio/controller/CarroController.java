@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.usuario.servicio.dto.CarroDTO;
-import com.usuario.servicio.servicio.CarroServicio;
+import com.usuario.servicio.service.CarroServicio;
 
 @RestController
 @RequestMapping("/carro")

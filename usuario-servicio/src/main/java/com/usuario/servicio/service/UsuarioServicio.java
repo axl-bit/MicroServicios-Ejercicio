@@ -1,4 +1,4 @@
-package com.usuario.servicio.servicio;
+package com.usuario.servicio.service;
 
 import java.util.ArrayList;
 import java.util.List;
