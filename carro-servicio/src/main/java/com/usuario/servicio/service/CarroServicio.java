@@ -28,9 +28,10 @@ public class CarroServicio {
 		 * 
 		 * Servicios
 		 * 
-		 * getAllCars => obtener todos los carros de la base de datos
+		 * getAllCars => obtener una lista de todos los carros de la base de datos
 		 * getCarById => obtener un carro en especifico mediante el Id
 		 * saveCar 	  => crear un carro nuevo 
+		 * findCarByUserId => 0btiene una la lista de carros pertenecientes a un usuarios mediante el Id del mismo
 		 * 
 		 * */
 		
@@ -55,6 +56,7 @@ public class CarroServicio {
 		private Carro convertToCarro(CarroDTO carroDTO) {
 			
 			Carro carro = new Carro();
+			
 			carro.setId(carroDTO.getId());
 			carro.setMarca(carroDTO.getMarca());
 			carro.setModelo(carroDTO.getModelo());
@@ -93,9 +95,9 @@ public class CarroServicio {
 		 * Metodo getCarById
 		 * 
 		 * Generamos un carro carroOptional y le asignamos los valores 
-		 * obtenidos por el metodo del repositorio JPA findById
+		 * obtenidos por el metodo del repositorio CrudRepository findById
 		 * luego retornamos los datos mapeando un objeto CarroDTO
-		 * si el objeto existe se devolvera el objeto y en caso no eista se retornara null
+		 * si el objeto existe se devolvera el objeto y en caso no exista se retornara null
 		 * 
 		 * */
 		
@@ -107,9 +109,9 @@ public class CarroServicio {
 		/*
 		 * Metodo saveCar
 		 * 
-		 * primero instanciamos Carro y convertimos los datos obtenidos de carroDTO
-		 * luego se guardaran los datos usando el repositorio JPA
-		 * y por ultimo retornaremos los datos convertido a DTO.
+		 * instanciamos Carro y convertimos los datos obtenidos de carroDTO
+		 * guardamos los datos usando el repositorio CrudRepository
+		 * yretornamos los datos convertido a DTO.
 		 * 
 		 * */
 		
@@ -124,10 +126,9 @@ public class CarroServicio {
 		/*
 		 * Metodo CarByUserId
 		 * 
-		 * primero primero encontramos los carros que pertencen a un usuario
-		 * esta buscqueda se realizara por Id
-		 * creamos la lista vacia de carros, usando un for convertimos los datos a carroDTO y los guardamos en la lista
-		 * por ultimo retornamos la lista de carros que pertenecen a un usuario
+		 *  encontramos los carros que pertencen a un usuario usando su Id
+		 * creamos la lista vacia de carros, usando un bucle for convertimos los datos a carroDTO y los guardamos
+		 * retornamos la lista de carros que pertenecen al usuario
 		 * 
 		 * */
 		

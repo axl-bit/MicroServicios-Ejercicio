@@ -1,15 +1,11 @@
-package com.moto.servicio.entity;
+package com.moto.servicio.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.io.Serializable;
 
-@Entity
-public class Moto {
+public class MotoDTO implements Serializable{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private static final long serialVersionUID = 1L;
+	
 	private int id;
 
 	private String marca;
@@ -22,8 +18,15 @@ public class Moto {
 	 * 
 	 */
 
-	public Moto() {
+	public MotoDTO() {
 		super();
+	}
+	
+	public MotoDTO(String marca, String modelo, int usuarioId) {
+		super();
+		this.marca = marca;
+		this.modelo = modelo;
+		this.usuarioId = usuarioId;
 	}
 
 	/*
@@ -63,5 +66,4 @@ public class Moto {
 	public void setUsuarioId(int usuarioId) {
 		this.usuarioId = usuarioId;
 	}
-
 }

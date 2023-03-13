@@ -39,6 +39,10 @@ public class UsuarioController {
 		try {
 			
 			List<UsuarioDTO> usuariosDTO = usuarioServicio.getAllUsers();
+			
+			if(usuariosDTO.isEmpty())
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			
 			return new ResponseEntity<>(usuariosDTO, HttpStatus.OK);
 			
 		} catch (Exception e) {
