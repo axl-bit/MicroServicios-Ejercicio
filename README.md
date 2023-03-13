@@ -15,3 +15,15 @@ este proyectos cuenta con las dependecias:
 - spring web
 
 actualmente se encuentra en la version 1.0 "proceso de implementacion"
+
+##configuracion de los servicios "application.properties"
+
+| ---------------------- | ------------ | ----------------------- |
+| nombre microservicio   |  server.port | spring.application.name |
+| ---------------------- | ------------ | ----------------------- |
+| usuario-servicio       |    8001      |  usuario-servicio       |
+| ---------------------- | ------------ | ----------------------- |
+| carro-servicio         |    8002      |  carro-servicio         |
+| ---------------------- | ------------ | ----------------------- |
+| moto-servicio          |    8003      |  moto-servicio          |
+| ---------------------- | ------------ | ----------------------- |
