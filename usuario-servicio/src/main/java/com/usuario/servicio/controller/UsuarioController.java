@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.usuario.servicio.dto.CarroDTO;
+import com.usuario.servicio.dto.MotoDTO;
 import com.usuario.servicio.dto.UsuarioDTO;
 import com.usuario.servicio.service.UsuarioServicio;
 
@@ -31,6 +33,8 @@ public class UsuarioController {
 	 * 1.- getAllUsers => Obtener listado de todos los usuarios
 	 * 2.- getUserById => Obtener los datos de un usuario mediante su Id
 	 * 3.- saveUser => Crear un Usuario nuevo 
+	 * 5.- getUsersCars => Obtener los carros de un usuario
+	 * 6.- getUsersMotos => Obtener las motos de un usuario
 	 * 
 	 * */
 	
@@ -96,4 +100,51 @@ public class UsuarioController {
 		}
 	}
 	
+	@GetMapping("/carros/{usuarioId}")
+	public ResponseEntity<?> getUsersCars(@PathVariable("usuarioId") int id){
+		
+		try {
+			
+			UsuarioDTO usuarioDTO = usuarioServicio.getUserById(id);
+			
+			if(usuarioDTO == null)
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			
+			List<CarroDTO> carrosDTO = usuarioServicio.getCars(id);
+			
+			return new ResponseEntity<>(carrosDTO, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			
+			Map<String, String> respuesta = new HashMap<>();
+			respuesta.put("error", "Hubo un error al intentar crear el usuario: " + e);
+			return new ResponseEntity<>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
+		
+	}
+	
+	@GetMapping("/motos/{usuarioId}")
+	public ResponseEntity<?> getUsersMotos(@PathVariable("usuarioId") int id){
+		
+		try {
+			
+			UsuarioDTO usuarioDTO = usuarioServicio.getUserById(id);
+			
+			if(usuarioDTO == null)
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			
+			List<MotoDTO> motosDTO = usuarioServicio.getMotos(id);
+			
+			return new ResponseEntity<>(motosDTO, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			
+			Map<String, String> respuesta = new HashMap<>();
+			respuesta.put("error", "Hubo un error al intentar crear el usuario: " + e);
+			return new ResponseEntity<>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
+		
+	}
 }

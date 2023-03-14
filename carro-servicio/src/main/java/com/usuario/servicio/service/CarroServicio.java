@@ -3,6 +3,7 @@ package com.usuario.servicio.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,26 +68,23 @@ public class CarroServicio {
 		
 		/*
 		 * 
-		 * Creamos lo Servicios
+		 * Creamos los Servicios
 		 * 
 		 * */
 		
 		/*
 		 * Metodo getAllCars
 		 * 
-		 * pirmero obtenemos los valores de la base de datos usando el metodo del repositorio JPA
-		 * Creamos una lista vacia de CarroDTO, esta para guardar los datos de retorno
-		 * usando un for convertimos los datos obtenidos a carroDTO
-		 * luego lo añadimos a la lista de carrosDTO
-		 * por ultimo retornamos el listado de carrosDTO
+		 * creamos una lista de Carro y le asignamos los datos obtenidos de findAll()
+		 * creamos una lista de CarroDTO y transformamos los datos de carros a carrosDTO
+		 * retornamos la lista de carrosDTO
 		 * 
 		 * */
 		
 		public List<CarroDTO> getAllCars(){
 			
-			List<Carro> carros = carroRepository.findAll();
-			List<CarroDTO> carrosDTO = new ArrayList<>();
-			for(Carro carro: carros) {carrosDTO.add(convertToCarroDTO(carro));}
+			List<Carro> carros = carroRepository.findAll();			
+			List<CarroDTO> carrosDTO = carros.stream().map(this::convertToCarroDTO).collect(Collectors.toList()); 
 			
 			return carrosDTO;
 		}
@@ -94,10 +92,8 @@ public class CarroServicio {
 		/*
 		 * Metodo getCarById
 		 * 
-		 * Generamos un carro carroOptional y le asignamos los valores 
-		 * obtenidos por el metodo del repositorio CrudRepository findById
-		 * luego retornamos los datos mapeando un objeto CarroDTO
-		 * si el objeto existe se devolvera el objeto y en caso no exista se retornara null
+		 * creamos Carro que sea Optional y le asignamos los valores de findById
+		 * retornamos los datos convertidos a CarroDTO o null en caso no se encuentren datos
 		 * 
 		 * */
 		
@@ -109,9 +105,9 @@ public class CarroServicio {
 		/*
 		 * Metodo saveCar
 		 * 
-		 * instanciamos Carro y convertimos los datos obtenidos de carroDTO
-		 * guardamos los datos usando el repositorio CrudRepository
-		 * yretornamos los datos convertido a DTO.
+		 * Creamos un Carro y le asignamos los valores obtenidos de carroDTO (convertidos a Carro)
+		 * Creamos un carroGuardado y usando save guardamos el carro
+		 * retornamos los valores de carroGuardado convertidos a CarroDTO
 		 * 
 		 * */
 		
@@ -126,7 +122,7 @@ public class CarroServicio {
 		/*
 		 * Metodo CarByUserId
 		 * 
-		 *  encontramos los carros que pertencen a un usuario usando su Id
+		 * encontramos los carros que pertencen a un usuario usando su Id
 		 * creamos la lista vacia de carros, usando un bucle for convertimos los datos a carroDTO y los guardamos
 		 * retornamos la lista de carros que pertenecen al usuario
 		 * 

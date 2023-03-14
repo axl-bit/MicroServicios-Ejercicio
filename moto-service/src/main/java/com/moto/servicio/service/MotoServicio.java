@@ -3,6 +3,7 @@ package com.moto.servicio.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -77,19 +78,16 @@ public class MotoServicio {
 	/*
 	 * Metodo getAllMotos
 	 * 
-	 * primero obtenemos los valores de la base de datos usando el metodo del repositorio JPA
-	 * Cremos una lsita vacia de MotoDTO, esta para guardar los datos de retorno
-	 * usando un for convertimos los datos obtenidos a motoDTO
-	 * luego lo añadimos a la lista de carrosDTO
-	 * por ultimo retornamos el lsitado de MotosDTO
+	 * creamos una lista de Moto y le asignamos los datos obtenidos de findAll()
+	 * creamos una lista de MotoDTO y transformamos los datos de motos a motosDTO
+	 * retornamos la lista motosDTO
 	 * 
 	 * */
 	
 	public List<MotoDTO> getAllMotos(){
 		
 		List<Moto> motos = motoRepository.findAll();
-		List<MotoDTO> motosDTO = new ArrayList<>();
-		for(Moto moto: motos) { motosDTO.add(convertToMotoDTO(moto));}
+		List<MotoDTO> motosDTO = motos.stream().map(this::convertToMotoDTO).collect(Collectors.toList());
 		
 		return motosDTO;
 		
@@ -98,10 +96,8 @@ public class MotoServicio {
 	/*
 	 * Metodo getMotoById
 	 * 
-	 * Generamos una moto motoOptional y le asignamos los valores
-	 * obtenidos por el metood del repostiorio CrudRepository findById
-	 * luego reornamos los datos mapeando un objeto MotoDTO
-	 * si el objeto existe se devolvera el objeto y en caso no exista se retornara null
+	 * creamos Moto que sea Optional y le asignamos los valores obtenidos por findById
+	 * retornmaos los datos convertidos a MotoDTO o null en caso no se encuentren datos
 	 * 
 	 * */
 	
@@ -113,16 +109,17 @@ public class MotoServicio {
 	/*
 	 * Metodo saveMoto
 	 * 
-	 * instanciamos Moto y convertimos los datos obtenidos de motoDTO
-	 * guardamos los datos usando el repositorio CrudRepository
-	 * retornamos los datos convertido a DTO
+	 * creamos una Moto y le asignamos los valores obtenidos de motoDTO (convertidos a Moto)
+	 * creamos una motoguardado y usando save guardamos la moto
+	 * retornamos los valores de motoGuardado conretidos a motoDTO
+	 * 
 	 * */
 
 	public MotoDTO saveMoto(MotoDTO motoDTO) {
 		
 		Moto moto = convertToMoto(motoDTO);
-		Moto motoguardado = motoRepository.save(moto);
-		return convertToMotoDTO(motoguardado);
+		Moto motoGuardado = motoRepository.save(moto);
+		return convertToMotoDTO(motoGuardado);
 		
 	}
 	
