@@ -14,7 +14,13 @@ este proyectos cuenta con las dependecias:
 - h2 database //es una base de datos en memoria
 - spring web
 
-actualmente se encuentra en la version 1.0 "proceso de implementacion"
+actualmente se encuentra en la version 2.0 "Comunincacion Por Rest Template"
+
+## Tipos de comunicacion
+
+- Rest Template (implementado): Implementacion de los servicios getCars y getMotos | Implementacion de controladores getUsersCars y getUsersMotos
+
+- Feign Client (por Implementar):
 
 ## configuracion de los servicios "application.properties"
 
