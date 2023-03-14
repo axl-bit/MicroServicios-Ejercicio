@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -150,7 +152,12 @@ public class UsuarioServicio {
 	
 	public List<CarroDTO> getCars(int usuarioId){
 		
-		List<CarroDTO> carrosDTO = restTemplate.getForObject("http://localhost:8002/carro/usuario/" + usuarioId, List.class);
+		List<CarroDTO> carrosDTO = restTemplate.exchange(
+			    "http://localhost:8002/carro/usuario/" + usuarioId,
+			    HttpMethod.GET,
+			    null,
+			    new ParameterizedTypeReference<List<CarroDTO>>() {}).getBody();
+
 		return carrosDTO;
 	}
 	
@@ -165,7 +172,11 @@ public class UsuarioServicio {
 	
 	public List<MotoDTO> getMotos(int usuarioId){
 		
-		List<MotoDTO> motosDTO = restTemplate.getForObject("http://localhost:8003/moto/usuario/" + usuarioId, List.class);
+		List<MotoDTO> motosDTO = restTemplate.exchange(
+			    "http://localhost:8003/moto/usuario/" + usuarioId,
+			    HttpMethod.GET,
+			    null,
+			    new ParameterizedTypeReference<List<MotoDTO>>() {}).getBody();
 		return motosDTO;
 	}
 	
