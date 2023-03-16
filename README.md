@@ -70,6 +70,8 @@ actualmente se encuentra en la version 3.0 "Comunincacion Por RestTemplate y Fei
 
 ### Servicio de Motos
 
+|Metodo| servicio | que hace | url |
+| -----| -------- | -------- | --- |
 | GET  | moto-servicio | lista todas las motos | http://localhost:8003/moto |
 | GET  | moto-servicio | listar moto por id | http://localhost:8003/moto/(motoId) |
 | POST | moto-servicio | guardar moto nueva | http://localhost:8003/moto |
