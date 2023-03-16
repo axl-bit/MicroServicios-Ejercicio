@@ -26,9 +26,16 @@ actualmente se encuentra en la version 3.0 "Comunincacion Por RestTemplate y Fei
 
 ## Tipos de comunicacion
 
-- Rest Template (implementado): Implementacion de los servicios getCars y getMotos | Implementacion de controladores getUsersCars y getUsersMotos
+- Rest Template (implementado):
+	- se agrego ResTemplateConfig, donde se creo la intancia para la comunicacion
+	- Se implementaron getCars y get Motos en UsuarioServicio en UsuarioServicio
+	- Se implementaron getUsersCars y getUsersMotos en UsuarioController
 
-- Feign Client (por Implementar):
+- Feign Client (implementado):
+	- se agrego el marcado @EnableFeignClient en UsuarioSerivicioApplication.java 
+	- se agregaron las interfaces CarroFeignClient y MotoFeignClient
+	- se agregaron saveCar y saveMoto en UsuarioServicio
+	- se agregaron saveCar y saveMoto en UsuarioController
 
 ## configuracion de los servicios "application.properties"
 
