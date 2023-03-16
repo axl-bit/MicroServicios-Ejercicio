@@ -42,8 +42,8 @@ actualmente se encuentra en la version 3.0 "Comunincacion Por RestTemplate y Fei
 
 |Metodo| servicio | que hace | url |
 | -----| -------- | -------- | --- |
-| GET  | usuario-servicio | lista todos los usuario | http:localhost:8001/usuario |
-| GET  | usuario-servicio | lista usuario por id    | http:localhost:8001/usurio/(id) |
+| GET  | usuario-servicio | lista todos los usuario | http://localhost:8001/usuario |
+| GET  | usuario-servicio | lista usuario por id    | http://localhost:8001/usurio/(id) |
 | GET  | usuario-servicio | lista los carros del usuario | http://localhost:8001/usuario/carros/(id) |
 | GET  | usuario-servicio | lista las motos del usuario | http://localhost:8001/usuario/motos/(id) |
 | POST | usuario-servicio | guardar usuario nuevo | http://localhost:8001/usuario |
