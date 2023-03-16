@@ -1,9 +1,10 @@
 package com.usuario.servicio.dto;
 
 public class CarroDTO {
-	
+
 	private String marca;
 	private String modelo;
+	private int usuarioId;
 
 	public CarroDTO() {
 		super();
@@ -23,6 +24,14 @@ public class CarroDTO {
 
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
+	}
+
+	public int getUsuarioId() {
+		return usuarioId;
+	}
+
+	public void setUsuarioId(int usuarioId) {
+		this.usuarioId = usuarioId;
 	}
 
 }

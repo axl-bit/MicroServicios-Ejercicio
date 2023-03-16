@@ -4,6 +4,7 @@ public class MotoDTO {
 
 	private String marca;
 	private String modelo;
+	private int usuarioId;
 
 	public MotoDTO() {
 		super();
@@ -25,5 +26,12 @@ public class MotoDTO {
 		this.modelo = modelo;
 	}
 
-	
+	public int getUsuarioId() {
+		return usuarioId;
+	}
+
+	public void setUsuarioId(int usuarioId) {
+		this.usuarioId = usuarioId;
+	}
+
 }

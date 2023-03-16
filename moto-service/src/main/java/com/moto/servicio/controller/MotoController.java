@@ -44,7 +44,7 @@ public class MotoController {
 			if(motoDTO.isEmpty())
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(motoDTO, HttpStatus.OK);
 			
 		} catch (Exception e) {
 

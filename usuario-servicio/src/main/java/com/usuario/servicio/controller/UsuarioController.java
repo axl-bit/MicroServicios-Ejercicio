@@ -33,9 +33,10 @@ public class UsuarioController {
 	 * 1.- getAllUsers => Obtener listado de todos los usuarios
 	 * 2.- getUserById => Obtener los datos de un usuario mediante su Id
 	 * 3.- saveUser => Crear un Usuario nuevo 
-	 * 5.- getUsersCars => Obtener los carros de un usuario
-	 * 6.- getUsersMotos => Obtener las motos de un usuario
-	 * 
+	 * 5.- getUsersCars => Obtener los carros de un usuario, llamandolo de carro-servicio (RestTemplate)
+	 * 6.- getUsersMotos => Obtener las motos de un usuario, llamandola de moto-servicio (RestTemplate)
+	 * 7.- saveCar => Crear un carro nuevo, comunicandose con carro-servicio (FeignClient)
+	 * 8.- saveMoto => Crear una moto nueva, comunicandose son moto-servicio (FeingClient) 
 	 * */
 	
 	@GetMapping
@@ -117,7 +118,7 @@ public class UsuarioController {
 		} catch (Exception e) {
 			
 			Map<String, String> respuesta = new HashMap<>();
-			respuesta.put("error", "Hubo un error al intentar crear el usuario: " + e);
+			respuesta.put("error", "Hubo un error al intentar listar los carros del usuario (RestTemplate): " + e);
 			return new ResponseEntity<>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}
@@ -141,10 +142,50 @@ public class UsuarioController {
 		} catch (Exception e) {
 			
 			Map<String, String> respuesta = new HashMap<>();
-			respuesta.put("error", "Hubo un error al intentar crear el usuario: " + e);
+			respuesta.put("error", "Hubo un error al intentar listar las motos del usuario (RestTemplate): " + e);
 			return new ResponseEntity<>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}
 		
 	}
+	
+	@PostMapping("/carro/{usuarioId}")
+	public ResponseEntity<?> saveCar(@PathVariable("usuarioId") int usuarioId, @RequestBody CarroDTO carroDTO){
+		
+		try {
+			
+			CarroDTO carroDTONuevo = usuarioServicio.saveCar(usuarioId, carroDTO);
+			
+			return new ResponseEntity<>(carroDTONuevo, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			
+			Map<String, String> respuesta = new HashMap<>();
+			respuesta.put("error", "Hubo un error al intentar crear el carro usando FeignClient: " + e);
+			return new ResponseEntity<>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
+		
+	}
+	
+	@PostMapping("/moto/{usuarioId}")
+	public ResponseEntity<?> saveMoto(@PathVariable("usuarioId") int usuarioId, @RequestBody MotoDTO motoDTO){
+		
+		try {
+			
+			MotoDTO motoDTONuevo = usuarioServicio.saveMoto(usuarioId, motoDTO);
+			
+			return new ResponseEntity<>(motoDTONuevo, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			
+			Map<String, String> respuesta = new HashMap<>();
+			respuesta.put("error", "Hubo un error al intentar crear la moto usando FeignClient: " + e);
+			return new ResponseEntity<>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
+		
+	}
+	
+	
 }

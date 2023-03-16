@@ -14,18 +14,28 @@ import com.usuario.servicio.dto.CarroDTO;
 import com.usuario.servicio.dto.MotoDTO;
 import com.usuario.servicio.dto.UsuarioDTO;
 import com.usuario.servicio.entity.Usuario;
+import com.usuario.servicio.feingsclients.CarroFeignClient;
+import com.usuario.servicio.feingsclients.MotoFeignClient;
 import com.usuario.servicio.repository.UsuarioRepository;
 
 @Service
 public class UsuarioServicio {
 	
-	//Instanciamos el repositorio
+	//Injectamos el repositorio
 	@Autowired 
 	private UsuarioRepository usuarioRepository;
 	
-	//Instanciamos Resttemplate para la comuncicacion de los microservicios
+	//Injectamos RestTemplate para la comuncicacion de los microservicios
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	//Injectamos la interfaz de carro FeignClient
+	@Autowired
+	private CarroFeignClient carroFeignClient;
+	
+	//Injectamos la interfaz de moto FeignClient
+	@Autowired
+	private MotoFeignClient motoFeignClient;
 	
 	/*
 	 * 
@@ -44,7 +54,13 @@ public class UsuarioServicio {
 	 * 
 	 * Servicios RestTemplate
 	 * 
-	 * getCars() => obtener los carros 
+	 * getCars() => obtener los carros de carro-servicio
+	 * getMotos() => obtener las motos de moto-servicio
+	 * 
+	 * Servicios FeignClient
+	 * 
+	 * saveCars() => crear un carro nuevo comunicandoce con carro-servicio
+	 * saveMotos() => crear una moto nueva comunicandoce con moto-servicio
 	 * 
 	 * */
 
@@ -181,5 +197,40 @@ public class UsuarioServicio {
 	}
 	
 	
+	/*
+	 * 
+	 * Creamos los Servicios FeignClient
+	 * 
+	 * */
+	
+	/*
+	 * Metodo saveCar(FeignClient)
+	 * 
+	 * asignamos el usuarioId al carroDTO
+	 * guardamos los datos usando la interfaz que creamos con feignclient
+	 * retornamos el carroNuevo
+	 * 
+	 * */
+	
+	public CarroDTO saveCar(int usuarioId, CarroDTO carroDTO) {
+		carroDTO.setUsuarioId(usuarioId);
+		CarroDTO carroNuevo = carroFeignClient.save(carroDTO);
+		return carroNuevo;
+	}
+	
+	/*
+	 * Metodo saveMoto(FeignClient)
+	 * 
+	 * asignamos el usuarioId a la motoDTO
+	 * guardamos los datos usando la interfaz que creamo con feignclient
+	 * retornamos la motoNuevo
+	 * 
+	 * */
+	
+	public MotoDTO saveMoto(int usuarioId, MotoDTO motoDTO) {
+		motoDTO.setUsuarioId(usuarioId);
+		MotoDTO motoNuevo = motoFeignClient.save(motoDTO);
+		return motoNuevo;
+	}
 	
 }
