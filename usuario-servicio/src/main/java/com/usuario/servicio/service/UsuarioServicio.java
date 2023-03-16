@@ -1,6 +1,8 @@
 package com.usuario.servicio.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -61,6 +63,7 @@ public class UsuarioServicio {
 	 * 
 	 * saveCars() => crear un carro nuevo comunicandoce con carro-servicio
 	 * saveMotos() => crear una moto nueva comunicandoce con moto-servicio
+	 * getUservehicles() => Obtener todos los vehiculos (carros y motos)
 	 * 
 	 * */
 
@@ -95,6 +98,7 @@ public class UsuarioServicio {
 		//Retornamos el Usuario
 		return usuario;
 	}
+	
 		
 	/*
 	 * 
@@ -145,8 +149,9 @@ public class UsuarioServicio {
 	
 	public UsuarioDTO saveUser(UsuarioDTO usuarioDTO) {
 		
-		Usuario usuario = convertToUsuario(usuarioDTO);		 
-		Usuario usuarioGuardado = usuarioRepository.save(usuario);
+		//Usuario usuario = convertToUsuario(usuarioDTO);		 
+		//Usuario usuarioGuardado = usuarioRepository.save(usuario);
+		Usuario usuarioGuardado = usuarioRepository.save(convertToUsuario(usuarioDTO));
 		return convertToUsuarioDTO(usuarioGuardado);
 		
 	}
@@ -204,7 +209,7 @@ public class UsuarioServicio {
 	 * */
 	
 	/*
-	 * Metodo saveCar(FeignClient)
+	 * Metodo saveCar (FeignClient)
 	 * 
 	 * asignamos el usuarioId al carroDTO
 	 * guardamos los datos usando la interfaz que creamos con feignclient
@@ -219,7 +224,7 @@ public class UsuarioServicio {
 	}
 	
 	/*
-	 * Metodo saveMoto(FeignClient)
+	 * Metodo saveMoto (FeignClient)
 	 * 
 	 * asignamos el usuarioId a la motoDTO
 	 * guardamos los datos usando la interfaz que creamo con feignclient
@@ -232,5 +237,45 @@ public class UsuarioServicio {
 		MotoDTO motoNuevo = motoFeignClient.save(motoDTO);
 		return motoNuevo;
 	}
+	
+	/*
+	 * Metodo getUservehicles (FeignClient)	
+	 * 
+	 * */
+	
+	public Map<String, Object> getUservehicles(int usuarioId){
+	    Map<String, Object> resultado = new HashMap<>();
+	    UsuarioDTO usuario = usuarioRepository.findById(usuarioId)
+	        .map(this::convertToUsuarioDTO)
+	        .orElse(null);
+
+	    if(usuario == null) {
+	        resultado.put("Mensaje", "El usuario no existe");
+	        return resultado;
+	    }
+
+	    resultado.put("Usuario", usuario);
+
+	    List<CarroDTO> carros = carroFeignClient.getCars(usuarioId);
+
+	    if(carros.isEmpty()) {
+	        resultado.put("Carros", "El usuario no tiene carros");
+	    }
+	    else {
+	        resultado.put("Carros", carros);
+	    }
+
+	    List<MotoDTO> motos = motoFeignClient.getMotos(usuarioId);
+
+	    if(motos.isEmpty()) {
+	        resultado.put("Motos", "El usuario no tiene motos");
+	    }
+	    else {
+	        resultado.put("Motos", motos);
+	    }
+	    
+	    return resultado;
+	}
+
 	
 }

@@ -36,7 +36,9 @@ public class UsuarioController {
 	 * 5.- getUsersCars => Obtener los carros de un usuario, llamandolo de carro-servicio (RestTemplate)
 	 * 6.- getUsersMotos => Obtener las motos de un usuario, llamandola de moto-servicio (RestTemplate)
 	 * 7.- saveCar => Crear un carro nuevo, comunicandose con carro-servicio (FeignClient)
-	 * 8.- saveMoto => Crear una moto nueva, comunicandose son moto-servicio (FeingClient) 
+	 * 8.- saveMoto => Crear una moto nueva, comunicandose son moto-servicio (FeingClient)
+	 * 9.- getUservehicles => Obtener todos los vehiculos de un usuario (FeignClient)
+	 * 
 	 * */
 	
 	@GetMapping
@@ -181,6 +183,24 @@ public class UsuarioController {
 			
 			Map<String, String> respuesta = new HashMap<>();
 			respuesta.put("error", "Hubo un error al intentar crear la moto usando FeignClient: " + e);
+			return new ResponseEntity<>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
+		
+	}
+	
+	@GetMapping("/todos/{usuarioId}")
+	public ResponseEntity<?> getUservehicles(@PathVariable("usuarioId") int usuarioId){
+		
+		try {
+			
+			Map<String , Object> resultado = usuarioServicio.getUservehicles(usuarioId);
+			return new ResponseEntity<>(resultado, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			
+			Map<String, String> respuesta = new HashMap<>();
+			respuesta.put("error", "Hubo un error al intentar listar todos los vehiculos del usuario usando FeignClient: " + e);
 			return new ResponseEntity<>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}
