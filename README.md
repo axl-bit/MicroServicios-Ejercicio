@@ -22,7 +22,7 @@ dependencias
 - spring web
 - OpenFeign //puede ser implementada cuando se requiera
 
-actualmente se encuentra en la version 2.0 "Comunincacion Por Rest Template"
+actualmente se encuentra en la version 3.0 "Comunincacion Por RestTemplate y FeignClient"
 
 ## Tipos de comunicacion
 
@@ -42,4 +42,17 @@ actualmente se encuentra en la version 2.0 "Comunincacion Por Rest Template"
 
 |Metodo| servicio | que hace | url |
 | -----| -------- | -------- | --- |
-| GET  | usuario-servicio | lista todos los usuario | http:localhost:8001/usuario|
+| GET  | usuario-servicio | lista todos los usuario | http:localhost:8001/usuario |
+| GET  | usuario-servicio | lista usuario por id    | http:localhost:8001/usurio/(id) |
+| GET  | usuario-servicio | lista los carros del usuario | http://localhost:8001/usuario/carros/(id) |
+| GET  | usuario-servicio | lista las motos del usuario | http://localhost:8001/usuario/motos/(id) |
+| POST | usuario-servicio | guardar usuario nuevo | http://localhost:8001/usuario |
+| POST | usuario-servicio | guardar carro con usuarioId | http://localhost:8001/usuario/carro/(id) |
+| POST | usuario-servicio | guardar moto con usuarioId  | http://localhost:8001/usuario/moto/(id) |
+| GET  | carro-servicio | lista todos los carros | http://localhost:8002/carro |
+| GET  | carro-servicio | listar carro por id | http://localhost:8002/carro/(id) |
+| POST | carro-servicio | guardar carro nuevo | http://localhost:8002/carro |
+| GET  | moto-servicio | lista todas las motos | http://localhost:8003/moto |
+| GET  | moto-servicio | listar moto por id | http://localhost:8003/moto/(id) |
+| POST | moto-servicio | guardar moto nueva | http://localhost:8003/moto |
+
