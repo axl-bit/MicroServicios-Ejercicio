@@ -1,0 +1,12 @@
+server:
+  port: 8081 #puerto del servicio
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          default-label: config-server #rama o branch en que se va a trabajar
+          uri: https://github.com/axl-bit/MicroServicios-Ejercicio #uri del repositiorio
+          search-paths: config-data
+  application:
+    name: config-servicio #nombre del proyecto
