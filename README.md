@@ -10,13 +10,13 @@ En esta rama se da un paso mas adelante en los microservicios configurandolos us
 	- dependencias:
 		- Spring Boot DevTools
 		- Config Server
-	se cambio application.properties => application.yaml
+	- se cambio application.properties => application.yaml
 
 - cambios en los servicios usuario, carro y moto:
 	- dependencias:
 		- Config Client
 		- Bootstrap //de spring cloud, puedes encontrarla en maven repositorio
-	se cambio application.properties => bootstrap.yaml
+	- se cambio application.properties => bootstrap.yaml
 
 actualmente se encuentra en la version 4.0 "configuracion de servicios con Git"
 
