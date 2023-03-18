@@ -1,49 +1,35 @@
 # MicroServicios-Ejercicio
 
-Este es un ejercicio que estoy realizando para usar lo aprendido en la implementacion de microservicios
+Esta es la rama "config-server" continuacion del la rama "main"
 
-En este ejercicio encontrara las practicas:
-- Manejo de DTO, para las transferencias de datos.
-- CamelCase, para el nombramiento de variables, metodos, etc.
-- Comentarios entendibles, estos explican el funcionamiento de los metodos y parte poco usuales
+En esta rama se da un paso mas adelante en los microservicios configurandolos usando git
 
-## Informacion del Proyecto
+## cambios realizados
 
-versiones:
+- proyecto config-servicio (agregado):
+	dependencias:
+	- Spring Boot DevTools
+	- Config Server
+	se cambio application.properties => application.yaml
 
-- java 1.8
-- spring 2.5.14
+- cambios en los servicios usuario, carro y moto:
+	dependencias:
+	- Config Client
+	- Bootstrap //de spring cloud, puedes encontrarla en maven repositorio
+	se cambio application.properties => bootstrap.yaml
 
-dependencias
+actualmente se encuentra en la version 4.0 "configuracion de servicios con Git"
 
-- spring boot devtools
-- spring data jpa
-- h2 database //es una base de datos en memoria
-- spring web
-- OpenFeign //puede ser implementada cuando se requiera
+## configuracion de los servicios 
 
-actualmente se encuentra en la version 3.0 "Comunincacion Por RestTemplate y FeignClient"
+El proyecto config-servicio es el encargado de dar los puertos a cada uno de los servicios
+Estos puertos se pueden configurar en los archivos *.yaml de la carpeta config-data
 
-## Tipos de comunicacion
-
-- Rest Template (implementado):
-	- se agrego ResTemplateConfig, donde se creo la intancia para la comunicacion
-	- Se implementaron getCars y get Motos en UsuarioServicio en UsuarioServicio
-	- Se implementaron getUsersCars y getUsersMotos en UsuarioController
-
-- Feign Client (implementado):
-	- se agrego el marcado @EnableFeignClient en UsuarioSerivicioApplication.java 
-	- se agregaron las interfaces CarroFeignClient y MotoFeignClient
-	- se agregaron saveCar, saveMoto y getUserVehicles en UsuarioServicio
-	- se agregaron saveCar, saveMoto y getUserVehicles en UsuarioController
-
-## configuracion de los servicios "application.properties"
-
-| nombre microservicio   |  server.port | spring.application.name |
-| ---------------------- | ------------ | ----------------------- |
-| usuario-servicio       |    8001      |  usuario-servicio       |
-| carro-servicio         |    8002      |  carro-servicio         |
-| moto-servicio          |    8003      |  moto-servicio          |
+| nombre microservicio   |  server.port |
+| ---------------------- | ------------ |
+| usuario-servicio       |    8001      |
+| carro-servicio         |    8002      |
+| moto-servicio          |    8003      |
 
 ## rutas del programa
 
