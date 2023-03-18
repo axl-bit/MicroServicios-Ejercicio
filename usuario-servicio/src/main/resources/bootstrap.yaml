@@ -1,7 +1,11 @@
 spring:
   application:
-    name: usuario-servicio #indicamos el nombre de la aplicacion
+    #indicamos el nombre de la aplicacion
+    name: usuario-servicio
   cloud:
     config:
       enabled: true
-      uri: http://localhost:8081 #indicamos el puerto del config-server
+      #indicamos el puerto del config-server
+      uri: http://localhost:8081
+      
+      

@@ -5,8 +5,11 @@ spring:
     config:
       server:
         git:
-          default-label: config-server #rama o branch en que se va a trabajar
-          uri: https://github.com/axl-bit/MicroServicios-Ejercicio #uri del repositiorio
+          #rama o branch en que se va a trabajar
+          default-label: config-server
+          #uri del repositiorio
+          uri: https://github.com/axl-bit/MicroServicios-Ejercicio
           search-paths: config-data
   application:
-    name: config-servicio #nombre del proyecto
+    #nombre del proyecto
+    name: config-servicio
