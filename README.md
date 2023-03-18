@@ -7,23 +7,22 @@ En esta rama se da un paso mas adelante en los microservicios configurandolos us
 ## cambios realizados
 
 - proyecto config-servicio (agregado):
-	dependencias:
-	- Spring Boot DevTools
-	- Config Server
+	- dependencias:
+		- Spring Boot DevTools
+		- Config Server
 	se cambio application.properties => application.yaml
 
 - cambios en los servicios usuario, carro y moto:
-	dependencias:
-	- Config Client
-	- Bootstrap //de spring cloud, puedes encontrarla en maven repositorio
+	-dependencias:
+		- Config Client
+		- Bootstrap //de spring cloud, puedes encontrarla en maven repositorio
 	se cambio application.properties => bootstrap.yaml
 
 actualmente se encuentra en la version 4.0 "configuracion de servicios con Git"
 
 ## configuracion de los servicios 
 
-El proyecto config-servicio es el encargado de dar los puertos a cada uno de los servicios
-Estos puertos se pueden configurar en los archivos *.yaml de la carpeta config-data
+El proyecto config-servicio es el encargado de dar los puertos a cada uno de los servicios. Estos puertos se pueden configurar en los archivos *.yaml de la carpeta config-data
 
 | nombre microservicio   |  server.port |
 | ---------------------- | ------------ |
