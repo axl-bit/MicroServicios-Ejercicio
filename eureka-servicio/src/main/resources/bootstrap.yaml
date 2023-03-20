@@ -1,7 +1,7 @@
 spring:
   application:
     #indicamos el nombre de la aplicacion
-    name: usuario-servicio
+    name: eureka-servicio
   cloud:
     config:
       enabled: true
