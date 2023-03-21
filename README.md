@@ -1,24 +1,33 @@
 # MicroServicios-Ejercicio
 
-Esta es la rama "config-server" continuacion del la rama "main"
+Esta es la rama "eureka" continuacion del la rama "config-server"
 
-En esta rama se da un paso mas adelante en los microservicios configurandolos usando git
+En esta rama se da un paso mas adelante en los microservicios adicionando eureka en el proyecto
 
 ## cambios realizados
 
-- proyecto config-servicio (agregado):
+- creamos una nueva rama eureka
+- creamos un proyecto eureka-servicio:
 	- dependencias:
+ 		- Config Client
+		- Eureka Server
 		- Spring Boot DevTools
-		- Config Server
-	se cambio application.properties => application.yaml
+		- Bootstrap
+	- cambiamos de application.properties => bootstrap.yaml
+	- Agregamos la notacion @EnableEurekaServer en la clase principal
 
-- cambios en los servicios usuario, carro y moto:
-	- dependencias:
-		- Config Client
-		- Bootstrap //de spring cloud, puedes encontrarla en maven repositorio
-	se cambio application.properties => bootstrap.yaml
+- cambios realizados  en config-data:
+	- agregamos eureka-servicio.yaml
+	- agregamos eureka a usuario, carro y moto
 
-actualmente se encuentra en la version 4.0 "configuracion de servicios con Git"
+- cambios realizados en usuario, carro y moto:
+	- Eureka Discovery Client
+	- agregamos la notacion @EnableEurekaClient
+
+- cambios en config-servicio:
+	- cambiamos default-label de config-server => eureka
+
+actualmente se encuentra en la version 5.0 "Implementacion de eureka"
 
 ## configuracion de los servicios 
 
@@ -29,6 +38,8 @@ El proyecto config-servicio es el encargado de dar los puertos a cada uno de los
 | usuario-servicio       |    8001      |
 | carro-servicio         |    8002      |
 | moto-servicio          |    8003      |
+| config-servicio        |    8081      |
+| eureka-servicio        |    8761      |
 
 ## rutas del programa
 
