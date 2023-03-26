@@ -7,16 +7,16 @@ En esta rama se da un paso mas adelante en los microservicios implmentando el in
 ## cambios realizados
 
 
-Implementación de instanciamiento multiple:
+- Implementación de instanciamiento multiple:
 
-cambios realizados en eureka-servicio (config-data):
+- cambios realizados en eureka-servicio (config-data):
 	- se añadio service-url => default-zone "http://${eureka.instance.hostname}:${server.port}/eureka/ "
 
-cambios realizados en usuario, carro y moto (config-data):
+- cambios realizados en usuario, carro y moto (config-data):
 	- se cambiaron los puertos de 8001, 8002 y 8003. A unos que se actaulizan de forma random en el instance-id  "${PORT:${SERVER_PORT:0}}"
 	- se agrego instance => instance-id "${spring.application.name}:${spring.application.instance_id:${random.value}}"
 
-cambios realizados en config-servicio:
+- cambios realizados en config-servicio:
 	- se cambio defaul-label: eureka => multiple-instances
 
 actualmente se encuentra en la version 6.0 "Implementacion de instanciamiento multiple"
