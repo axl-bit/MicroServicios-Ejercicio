@@ -1,74 +1,38 @@
 # MicroServicios-Ejercicio
 
-Esta es la rama "eureka" continuacion del la rama "config-server"
+Esta es la rama "eureka" continuacion del la rama "multiple-instances"
 
-En esta rama se da un paso mas adelante en los microservicios adicionando eureka en el proyecto
+En esta rama se da un paso mas adelante en los microservicios implmentando el instanciamiento multiple de un servicio.
 
 ## cambios realizados
 
-- creamos una nueva rama eureka
-- creamos un proyecto eureka-servicio:
-	- dependencias:
- 		- Config Client
-		- Eureka Server
-		- Spring Boot DevTools
-		- Bootstrap
-	- cambiamos de application.properties => bootstrap.yaml
-	- Agregamos la notacion @EnableEurekaServer en la clase principal
 
-- cambios realizados  en config-data:
-	- agregamos eureka-servicio.yaml
-	- agregamos eureka a usuario, carro y moto
+Implementación de instanciamiento multiple:
 
-- cambios realizados en usuario, carro y moto:
-	- Eureka Discovery Client
-	- agregamos la notacion @EnableEurekaClient
+cambios realizados en eureka-servicio (config-data):
+	- se añadio service-url => default-zone "http://${eureka.instance.hostname}:${server.port}/eureka/ "
 
-- cambios en config-servicio:
-	- cambiamos default-label de config-server => eureka
+cambios realizados en usuario, carro y moto (config-data):
+	- se cambiaron los puertos de 8001, 8002 y 8003. A unos que se actaulizan de forma random en el instance-id  "${PORT:${SERVER_PORT:0}}"
+	- se agrego instance => instance-id "${spring.application.name}:${spring.application.instance_id:${random.value}}"
 
-actualmente se encuentra en la version 5.0 "Implementacion de eureka"
+cambios realizados en config-servicio:
+	- se cambio defaul-label: eureka => multiple-instances
+
+actualmente se encuentra en la version 6.0 "Implementacion de instanciamiento multiple"
 
 ## configuracion de los servicios 
 
 El proyecto config-servicio es el encargado de dar los puertos a cada uno de los servicios. Estos puertos se pueden configurar en los archivos *.yaml de la carpeta config-data
 
+#### NOTA: la configuracion de los puerto se realizara en la proxima actualizacion en donde se usara gateway
+
 | nombre microservicio   |  server.port |
 | ---------------------- | ------------ |
-| usuario-servicio       |    8001      |
-| carro-servicio         |    8002      |
-| moto-servicio          |    8003      |
+| usuario-servicio       |    random    |
+| carro-servicio         |    random    |
+| moto-servicio          |    random    |
 | config-servicio        |    8081      |
 | eureka-servicio        |    8761      |
 
-## rutas del programa
-
-### Servicio de Usuario
-
-|Metodo| servicio | que hace | url |
-| -----| -------- | -------- | --- |
-| GET  | usuario-servicio | lista todos los usuario | http://localhost:8001/usuario |
-| GET  | usuario-servicio | lista usuario por id    | http://localhost:8001/usurio/(usuarioId) |
-| GET  | usuario-servicio | lista los carros del usuario | http://localhost:8001/usuario/carros/(usuarioId) |
-| GET  | usuario-servicio | lista las motos del usuario | http://localhost:8001/usuario/motos/(usuarioId) |
-| GET  | usuario-servicio | listar todos los vehiculos de un usuario | http://localhost:8001/usuario/todos/(usuarioId) |
-| POST | usuario-servicio | guardar usuario nuevo | http://localhost:8001/usuario |
-| POST | usuario-servicio | guarda un carro y lo asocia con el usuario | http://localhost:8001/usuario/carro/(usuarioId) |
-| POST | usuario-servicio | guardar una moto y lo asocia con el usuario  | http://localhost:8001/usuario/moto/(usuarioId) |
-
-### Servicio de Carros
-
-|Metodo| servicio | que hace | url |
-| -----| -------- | -------- | --- |
-| GET  | carro-servicio | lista todos los carros | http://localhost:8002/carro |
-| GET  | carro-servicio | listar carro por id | http://localhost:8002/carro/(carroId) |
-| POST | carro-servicio | guardar carro nuevo | http://localhost:8002/carro |
-
-### Servicio de Motos
-
-|Metodo| servicio | que hace | url |
-| -----| -------- | -------- | --- |
-| GET  | moto-servicio | lista todas las motos | http://localhost:8003/moto |
-| GET  | moto-servicio | listar moto por id | http://localhost:8003/moto/(motoId) |
-| POST | moto-servicio | guardar moto nueva | http://localhost:8003/moto |
 
