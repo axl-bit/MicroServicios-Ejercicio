@@ -6,7 +6,7 @@ spring:
       server:
         git:
           #rama o branch en que se va a trabajar
-          default-label: eureka
+          default-label: multiple-instances
           #uri del repositiorio
           uri: https://github.com/axl-bit/MicroServicios-Ejercicio
           search-paths: config-data
