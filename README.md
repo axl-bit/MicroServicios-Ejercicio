@@ -1,6 +1,6 @@
 # MicroServicios-Ejercicio
 
-Esta es la rama "eureka" continuacion del la rama "multiple-instances"
+Esta es la rama "multiple-instances" continuacion del la rama "eureka"
 
 En esta rama se da un paso mas adelante en los microservicios implmentando el instanciamiento multiple de un servicio.
 
