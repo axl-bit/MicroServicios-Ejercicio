@@ -2,36 +2,25 @@
 
 Esta es la rama "circuit-breaker" continuacion del la rama "gateway"
 
-En esta rama se da un paso mas adelante en los microservicios implmentando circuit breaker, de esta manera dar un mejor manejo de excepciones donde podremos expresar claramente los errores ocurridos por medio de fallbacks.
+En esta rama se da un paso mas adelante en los microservicios implmentando zipkin y sleuth, esto para tener seguimiento de logs y ver los el rendimiento de los servicios, y si hay algun problema o se puede mejorar algo, tenerlo mas claro.
 
 ## cambios realizados
 
+### Implementación de zipkin-sleuth:
 
-### Implementación de Circuit Breaker por medio de Resilience4j:
-
-- cambios en config-servicio:
-	- cambio de rama => circuit-breaker
 - cambios en usuario-servicio:
-	- añadimos dependencias => Spring Boot Actuator | Resilience4J | Spring boot starter aop
-	- añadimos la notacion @CircuitBreaker a:
-		- getUsersCars
-		- getUsersMotos
-        - saveCar
-        - saveMoto
-		- getUservehicles
-	- añadimos metodos fallback para cada uno de los anteriormente mencionados
-	- cambiamos en UsuarioServicio los puertos de getCars y getMotos.
-	- añadimos en RestTemplateConfig la notacion @LoadBalanced
-	- eliminamos los try/catch de los siguiente (para manejar los errores por fallback):
-		- getUsersCars
-        - getUsersMotos
-        - saveCar
-        - saveMoto
-		- getUservehicles
-- cambios en usuario-servicio (data-config):
-	- añadimos resilience4j.circuitbreaker
+	- añadimos dependencias Zipkin Client | Sleuth
+- cambios en carro-servicio:
+	- añadimos dependencias Zipkin Client | Sleuth
+- cambios en moto-servicio:
+	- añadimos dependencias Zipkin Client | Sleuth
+- descargamos y añadimos al proyecto el jar de zipkin (Link de descarga: https://zipkin.io/pages/quickstart.html  )
+- cambios en config-data (usuario - moto - carro):
+	- añadimos zipkin al final
+- comando para usar zipkin = java -jar zipkin-server-2.24.0-exec.jar (usando el bash de git iniciado "git init")
 
-actualmente se encuentra en la version 8.0 "Implementacion de circuit-breaker"
+
+actualmente se encuentra en la version 9.0 "Implementacion de zipkin y sleuth"
 
 ## configuracion de los servicios 
 
@@ -47,6 +36,7 @@ El proyecto config-servicio es el encargado de dar los puertos a cada uno de los
 | config-servicio        |    8081      |
 | eureka-servicio        |    8761      |
 | gateway-servicio		 |	  8080		|
+| zipkin				 | 	  9411		|
 
 
 ## rutas del programa
