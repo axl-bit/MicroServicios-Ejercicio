@@ -1,23 +1,37 @@
 # MicroServicios-Ejercicio
 
-Esta es la rama "gateway" continuacion del la rama "multiple-instances"
+Esta es la rama "circuit-breaker" continuacion del la rama "gateway"
 
-En esta rama se da un paso mas adelante en los microservicios implmentando un gateway para normalizar un puerto en comun para todos los servicios.
+En esta rama se da un paso mas adelante en los microservicios implmentando circuit breaker, de esta manera dar un mejor manejo de excepciones donde podremos expresar claramente los errores ocurridos por medio de fallbacks.
 
 ## cambios realizados
 
 
-#### Implementación del gateway:
+### Implementación de Circuit Breaker por medio de Resilience4j:
 
-- cambios realizados en config-servicio => default-label "gateway"
-- nuevo proyecto "gateway-servicio"
-	- dependencias: Spring Boot DevTools | Config Client | Eureka Discovery Client | Gateway  | Bootstrap
-	- agregando notacion "@EnableEurekaClient" en la clase run
-	- application.properties => bootstrap.yaml
-- nuevo gateway-servicio (config-data)
-- eliminamos url de carroFeignClient y motoFeignClient, ya que estos no serán necesarios y pueden causar errores.
+- cambios en config-servicio:
+	- cambio de rama => circuit-breaker
+- cambios en usuario-servicio:
+	- añadimos dependencias => Spring Boot Actuator | Resilience4J | Spring boot starter aop
+	- añadimos la notacion @CircuitBreaker a:
+		- getUsersCars
+		- getUsersMotos
+        - saveCar
+        - saveMoto
+		- getUservehicles
+	- añadimos metodos fallback para cada uno de los anteriormente mencionados
+	- cambiamos en UsuarioServicio los puertos de getCars y getMotos.
+	- añadimos en RestTemplateConfig la notacion @LoadBalanced
+	- eliminamos los try/catch de los siguiente (para manejar los errores por fallback):
+		- getUsersCars
+        - getUsersMotos
+        - saveCar
+        - saveMoto
+		- getUservehicles
+- cambios en usuario-servicio (data-config):
+	- añadimos resilience4j.circuitbreaker
 
-actualmente se encuentra en la version 7.0 "Implementacion de gateway"
+actualmente se encuentra en la version 8.0 "Implementacion de circuit-breaker"
 
 ## configuracion de los servicios 
 
