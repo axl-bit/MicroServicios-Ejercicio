@@ -24,6 +24,8 @@ dependencias
 
 actualmente se encuentra en la version 3.0 "Comunincacion Por RestTemplate y FeignClient"
 
+video que segui para este proyecto: https://www.youtube.com/watch?v=icTg6iTqpUk&list=PL_8FSlpwPBDmzYRcnE4JEaAcao83aDB2B&ab_channel=LaTecnolog%C3%ADaAvanza
+
 ## Tipos de comunicacion
 
 - Rest Template (implementado):
