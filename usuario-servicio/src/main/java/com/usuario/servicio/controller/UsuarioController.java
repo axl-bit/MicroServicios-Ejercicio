@@ -19,6 +19,8 @@ import com.usuario.servicio.dto.MotoDTO;
 import com.usuario.servicio.dto.UsuarioDTO;
 import com.usuario.servicio.service.UsuarioServicio;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
@@ -33,11 +35,19 @@ public class UsuarioController {
 	 * 1.- getAllUsers => Obtener listado de todos los usuarios
 	 * 2.- getUserById => Obtener los datos de un usuario mediante su Id
 	 * 3.- saveUser => Crear un Usuario nuevo 
-	 * 5.- getUsersCars => Obtener los carros de un usuario, llamandolo de carro-servicio (RestTemplate)
-	 * 6.- getUsersMotos => Obtener las motos de un usuario, llamandola de moto-servicio (RestTemplate)
-	 * 7.- saveCar => Crear un carro nuevo, comunicandose con carro-servicio (FeignClient)
-	 * 8.- saveMoto => Crear una moto nueva, comunicandose son moto-servicio (FeingClient)
-	 * 9.- getUservehicles => Obtener todos los vehiculos de un usuario (FeignClient)
+	 * 5.- getUsersCars => Obtener los carros de un usuario, llamandolo de carro-servicio (RestTemplate) (Circuit-Breaker)
+	 * 6.- getUsersMotos => Obtener las motos de un usuario, llamandola de moto-servicio (RestTemplate) (Circuit-Breaker)
+	 * 7.- saveCar => Crear un carro nuevo, comunicandose con carro-servicio (FeignClient) (Circuit-Breaker)
+	 * 8.- saveMoto => Crear una moto nueva, comunicandose son moto-servicio (FeingClient) (Circuit-Breaker)
+	 * 9.- getUservehicles => Obtener todos los vehiculos de un usuario (FeignClient) (Circuit-Breaker)
+	 * 
+	 * metodos fallback para los circuit breakers
+	 * 
+	 * 1.- fallBackGetUsersCars
+	 * 2.- fallBackGetUsersMotos
+	 * 3.- fallBackSaveCar
+	 * 4.- fallBackSaveMoto
+	 * 5.- fallBackGetUservehicles
 	 * 
 	 * */
 	
@@ -103,6 +113,7 @@ public class UsuarioController {
 		}
 	}
 	
+	@CircuitBreaker(name= "carrosCB", fallbackMethod = "fallBackGetUsersCars")
 	@GetMapping("/carros/{usuarioId}")
 	public ResponseEntity<?> getUsersCars(@PathVariable("usuarioId") int id){
 		
@@ -127,6 +138,7 @@ public class UsuarioController {
 		
 	}
 	
+	@CircuitBreaker(name= "motosCB", fallbackMethod = "fallBackGetUsersMotos")
 	@GetMapping("/motos/{usuarioId}")
 	public ResponseEntity<?> getUsersMotos(@PathVariable("usuarioId") int id){
 		
@@ -151,6 +163,7 @@ public class UsuarioController {
 		
 	}
 	
+	@CircuitBreaker(name= "carrosCB", fallbackMethod = "fallBackSaveCar")
 	@PostMapping("/carro/{usuarioId}")
 	public ResponseEntity<?> saveCar(@PathVariable("usuarioId") int usuarioId, @RequestBody CarroDTO carroDTO){
 		
@@ -170,6 +183,7 @@ public class UsuarioController {
 		
 	}
 	
+	@CircuitBreaker(name= "motosCB", fallbackMethod = "fallBackSaveMoto")
 	@PostMapping("/moto/{usuarioId}")
 	public ResponseEntity<?> saveMoto(@PathVariable("usuarioId") int usuarioId, @RequestBody MotoDTO motoDTO){
 		
@@ -189,6 +203,7 @@ public class UsuarioController {
 		
 	}
 	
+	@CircuitBreaker(name= "todosCB", fallbackMethod = "fallBackGetUservehicles")
 	@GetMapping("/todos/{usuarioId}")
 	public ResponseEntity<?> getUservehicles(@PathVariable("usuarioId") int usuarioId){
 		
@@ -207,5 +222,29 @@ public class UsuarioController {
 		
 	}
 	
+	/*
+	 * 
+	 * Creando los metodos fallback de circuit breaker
+	 * 
+	 * */
 	
+	private ResponseEntity<?> fallBackGetUsersCars(@PathVariable("usuarioId") int id, RuntimeException exception){
+		return new ResponseEntity<>("El usuario: " + id + " tiene los carros en el taller",HttpStatus.OK);
+	}
+	
+	private ResponseEntity<?> fallBackGetUsersMotos(@PathVariable("usuarioId") int id, RuntimeException exception){
+		return new ResponseEntity<>("El usuario: " + id + " tiene las motos en el taller",HttpStatus.OK);
+	}
+	
+	private ResponseEntity<?> fallBackSaveCar(@PathVariable("usuarioId") int id, RuntimeException exception){
+		return new ResponseEntity<>("El usuario: " + id + " no tiene dinero para los carros",HttpStatus.OK);
+	}
+	
+	private ResponseEntity<?> fallBackSaveMoto(@PathVariable("usuarioId") int id, RuntimeException exception){
+		return new ResponseEntity<>("El usuario: " + id + " no tiene dinero para las motos",HttpStatus.OK);
+	}
+	
+	private ResponseEntity<?> fallBackGetUservehicles(@PathVariable("usuarioId") int id, RuntimeException exception){
+		return new ResponseEntity<>("El usuario: " + id + " tiene los vehiculos en el taller",HttpStatus.OK);
+	}
 }
