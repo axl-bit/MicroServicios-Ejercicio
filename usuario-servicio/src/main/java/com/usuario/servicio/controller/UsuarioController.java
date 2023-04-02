@@ -115,111 +115,61 @@ public class UsuarioController {
 	
 	@CircuitBreaker(name= "carrosCB", fallbackMethod = "fallBackGetUsersCars")
 	@GetMapping("/carros/{usuarioId}")
-	public ResponseEntity<?> getUsersCars(@PathVariable("usuarioId") int id){
-		
-		try {
-			
-			UsuarioDTO usuarioDTO = usuarioServicio.getUserById(id);
-			
-			if(usuarioDTO == null)
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			
-			List<CarroDTO> carrosDTO = usuarioServicio.getCars(id);
-			
-			return new ResponseEntity<>(carrosDTO, HttpStatus.OK);
-			
-		} catch (Exception e) {
-			
-			Map<String, String> respuesta = new HashMap<>();
-			respuesta.put("error", "Hubo un error al intentar listar los carros del usuario (RestTemplate): " + e);
-			return new ResponseEntity<>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
-			
-		}
-		
+	public ResponseEntity<?> getUsersCars(@PathVariable("usuarioId") int id) {
+
+		UsuarioDTO usuarioDTO = usuarioServicio.getUserById(id);
+
+		if (usuarioDTO == null)
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+		List<CarroDTO> carrosDTO = usuarioServicio.getCars(id);
+
+		return new ResponseEntity<>(carrosDTO, HttpStatus.OK);
+
 	}
 	
 	@CircuitBreaker(name= "motosCB", fallbackMethod = "fallBackGetUsersMotos")
 	@GetMapping("/motos/{usuarioId}")
-	public ResponseEntity<?> getUsersMotos(@PathVariable("usuarioId") int id){
-		
-		try {
-			
-			UsuarioDTO usuarioDTO = usuarioServicio.getUserById(id);
-			
-			if(usuarioDTO == null)
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			
-			List<MotoDTO> motosDTO = usuarioServicio.getMotos(id);
-			
-			return new ResponseEntity<>(motosDTO, HttpStatus.OK);
-			
-		} catch (Exception e) {
-			
-			Map<String, String> respuesta = new HashMap<>();
-			respuesta.put("error", "Hubo un error al intentar listar las motos del usuario (RestTemplate): " + e);
-			return new ResponseEntity<>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
-			
-		}
-		
+	public ResponseEntity<?> getUsersMotos(@PathVariable("usuarioId") int id) {
+
+		UsuarioDTO usuarioDTO = usuarioServicio.getUserById(id);
+
+		if (usuarioDTO == null)
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+		List<MotoDTO> motosDTO = usuarioServicio.getMotos(id);
+
+		return new ResponseEntity<>(motosDTO, HttpStatus.OK);
+
 	}
 	
 	@CircuitBreaker(name= "carrosCB", fallbackMethod = "fallBackSaveCar")
 	@PostMapping("/carro/{usuarioId}")
-	public ResponseEntity<?> saveCar(@PathVariable("usuarioId") int usuarioId, @RequestBody CarroDTO carroDTO){
-		
-		try {
-			
-			CarroDTO carroDTONuevo = usuarioServicio.saveCar(usuarioId, carroDTO);
-			
-			return new ResponseEntity<>(carroDTONuevo, HttpStatus.OK);
-			
-		} catch (Exception e) {
-			
-			Map<String, String> respuesta = new HashMap<>();
-			respuesta.put("error", "Hubo un error al intentar crear el carro usando FeignClient: " + e);
-			return new ResponseEntity<>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
-			
-		}
-		
+	public ResponseEntity<?> saveCar(@PathVariable("usuarioId") int usuarioId, @RequestBody CarroDTO carroDTO) {
+
+		CarroDTO carroDTONuevo = usuarioServicio.saveCar(usuarioId, carroDTO);
+
+		return new ResponseEntity<>(carroDTONuevo, HttpStatus.OK);
+
 	}
 	
 	@CircuitBreaker(name= "motosCB", fallbackMethod = "fallBackSaveMoto")
 	@PostMapping("/moto/{usuarioId}")
-	public ResponseEntity<?> saveMoto(@PathVariable("usuarioId") int usuarioId, @RequestBody MotoDTO motoDTO){
-		
-		try {
-			
-			MotoDTO motoDTONuevo = usuarioServicio.saveMoto(usuarioId, motoDTO);
-			
-			return new ResponseEntity<>(motoDTONuevo, HttpStatus.OK);
-			
-		} catch (Exception e) {
-			
-			Map<String, String> respuesta = new HashMap<>();
-			respuesta.put("error", "Hubo un error al intentar crear la moto usando FeignClient: " + e);
-			return new ResponseEntity<>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
-			
-		}
-		
+	public ResponseEntity<?> saveMoto(@PathVariable("usuarioId") int usuarioId, @RequestBody MotoDTO motoDTO) {
+
+		MotoDTO motoDTONuevo = usuarioServicio.saveMoto(usuarioId, motoDTO);
+
+		return new ResponseEntity<>(motoDTONuevo, HttpStatus.OK);
+
 	}
 	
-	@CircuitBreaker(name= "todosCB", fallbackMethod = "fallBackGetUservehicles")
+	@CircuitBreaker(name = "todosCB", fallbackMethod = "fallBackGetUservehicles")
 	@GetMapping("/todos/{usuarioId}")
-	public ResponseEntity<?> getUservehicles(@PathVariable("usuarioId") int usuarioId){
-		
-		try {
-			
-			Map<String , Object> resultado = usuarioServicio.getUservehicles(usuarioId);
-			return new ResponseEntity<>(resultado, HttpStatus.OK);
-			
-		} catch (Exception e) {
-			
-			Map<String, String> respuesta = new HashMap<>();
-			respuesta.put("error", "Hubo un error al intentar listar todos los vehiculos del usuario usando FeignClient: " + e);
-			return new ResponseEntity<>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
-			
-		}
-		
+	public ResponseEntity<?> getUservehicles(@PathVariable("usuarioId") int usuarioId) {
+
+		Map<String, Object> resultado = usuarioServicio.getUservehicles(usuarioId);
+		return new ResponseEntity<>(resultado, HttpStatus.OK);
+
 	}
 	
 	/*
