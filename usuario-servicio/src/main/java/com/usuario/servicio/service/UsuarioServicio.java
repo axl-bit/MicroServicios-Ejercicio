@@ -174,7 +174,7 @@ public class UsuarioServicio {
 	public List<CarroDTO> getCars(int usuarioId){
 		
 		List<CarroDTO> carrosDTO = restTemplate.exchange(
-			    "http://localhost:8002/carro/usuario/" + usuarioId,
+			    "http://carro-servicio/carro/usuario/" + usuarioId,
 			    HttpMethod.GET,
 			    null,
 			    new ParameterizedTypeReference<List<CarroDTO>>() {}).getBody();
@@ -194,7 +194,7 @@ public class UsuarioServicio {
 	public List<MotoDTO> getMotos(int usuarioId){
 		
 		List<MotoDTO> motosDTO = restTemplate.exchange(
-			    "http://localhost:8003/moto/usuario/" + usuarioId,
+			    "http://moto-servicio/moto/usuario/" + usuarioId,
 			    HttpMethod.GET,
 			    null,
 			    new ParameterizedTypeReference<List<MotoDTO>>() {}).getBody();
